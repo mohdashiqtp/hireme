@@ -7,7 +7,7 @@ import prisma from "../../../lib/prismadb";
 
 export async function GET
 (
-    req : NextApiRequest,
+    req : Request,
     res : NextResponse
 )
 {

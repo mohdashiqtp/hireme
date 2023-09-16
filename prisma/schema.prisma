@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  id          String       @id @default(cuid())
+  name        String
+  email       String
+  about       String
+  clerkId     String       @unique
+  phone       String
+  profile     String?
+  resume      String?
+  experiences Experience[]
+  skills      Skill[]
+  Job         Job[]
+}
+
+model Job {
+  id             String    @id @default(cuid())
+  title          String
+  experience     String
+  employment     String
+  salary         String
+  description    String    @db.VarChar(200)
+  company        String
+  companyProfile String    @db.VarChar(2000)
+  resposibilties String    @db.VarChar(200)
+  recruiterId    String
+  UserId         String
+  location       String
+  recruiter      Recruiter @relation(fields: [recruiterId], references: [id])
+  applications   User      @relation(fields: [UserId], references: [id])
+}
+
+model Recruiter {
+  id       String @id @default(cuid())
+  name     String
+  email    String @unique
+  company  String
+  jobposts Job[]
+}
+
+model Experience {
+  id          String @id @default(cuid())
+  title       String
+  company     String
+  duration    String
+  summary     String
+  userId      String
+  description String
+  endDate     String
+  startedDate String
+  user        User   @relation(fields: [userId], references: [id])
+}
+
+model Skill {
+  id        String @id @default(cuid())
+  skillName String
+  userId    String
+  user      User   @relation(fields: [userId], references: [id])
+}

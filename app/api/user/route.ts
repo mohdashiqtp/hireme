@@ -9,11 +9,7 @@ import fs from 'fs/promises'
 import { getClerkUserPrimaryEmail } from "@/lib/clerk";
 import { get } from "http";
 
-export const config = {
-    api: {
-        bodyParser: false
-    }
-}
+
 
 export async function GET(
     req: Request,
